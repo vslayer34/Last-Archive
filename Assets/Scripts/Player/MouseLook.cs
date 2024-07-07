@@ -20,6 +20,12 @@ public class MouseLook : MonoBehaviour
 
 
     // Game Loop Methods---------------------------------------------------------------------------
+
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;    
+    }
+
     private void Update()
     {
         var mouseDelta = Mouse.current.delta.ReadValue();
@@ -33,24 +39,40 @@ public class MouseLook : MonoBehaviour
         _mouseY = -1 * _mouseY;
         _mouseY = Mathf.Clamp(_mouseY, MIN_LOOK_ANGLE, MAX_LOOK_ANGLE);
         // _playerView.transform.Rotate(Vector3.right, _mouseY);
+
+        Debug.Log(_playerView.transform.forward);
         
         // Clampan
 
-        if (_playerView.transform.localEulerAngles.x <= MIN_LOOK_ANGLE)
+        if (_playerView.transform.forward.y <= MIN_LOOK_ANGLE / 100)
         {
-            _playerView.transform.localEulerAngles = new Vector3(360 - MIN_LOOK_ANGLE, 0, 0);
+            _playerView.transform.forward = new Vector3(_playerView.transform.forward.x, MIN_LOOK_ANGLE /100, _playerView.transform.forward.z);
         }
-        // else if (_playerView.transform.localEulerAngles.x <= MAX_LOOK_ANGLE && _playerView.transform.localEulerAngles.x > 0)
-        // {
-        //     _playerView.transform.localEulerAngles = new Vector3(MAX_LOOK_ANGLE, 0, 0);
-        // }
+        else if (_playerView.transform.forward.y >= MAX_LOOK_ANGLE / 100)
+        {
+            _playerView.transform.forward = new Vector3(_playerView.transform.forward.x, MAX_LOOK_ANGLE /100, _playerView.transform.forward.z);
+        }
         else
         {
             // _playerView.transform.localEulerAngles += new Vector3(_mouseY, 0, 0);
             _playerView.transform.Rotate(Vector3.right, _mouseY);
         }
 
-        Debug.Log(_playerView.transform.localEulerAngles.x);
+        // if (_playerView.transform.localEulerAngles.x <= MIN_LOOK_ANGLE)
+        // {
+        //     _playerView.transform.localEulerAngles = new Vector3(360 - MIN_LOOK_ANGLE, 0, 0);
+        // }
+        // // else if (_playerView.transform.localEulerAngles.x <= MAX_LOOK_ANGLE && _playerView.transform.localEulerAngles.x > 0)
+        // // {
+        // //     _playerView.transform.localEulerAngles = new Vector3(MAX_LOOK_ANGLE, 0, 0);
+        // // }
+        // else
+        // {
+        //     // _playerView.transform.localEulerAngles += new Vector3(_mouseY, 0, 0);
+        //     _playerView.transform.Rotate(Vector3.right, _mouseY);
+        // }
+
+        // Debug.Log(_playerView.transform.localEulerAngles.x);
         
         // _playerView.transform.localEulerAngles = new Vector3(MIN_LOOK_ANGLE, 0, 0);
         // _playerView.transform.localEulerAngles += new Vector3(MAX_LOOK_ANGLE, 0, 0);
