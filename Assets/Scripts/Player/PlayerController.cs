@@ -64,7 +64,6 @@ public class PlayerController : MonoBehaviour
         {
             _isJumping = true;
             _verticalVelocity.y = _jumpForce;
-            Debug.Log("JUUMMMMMMMMMMMP" + _verticalVelocity.y);
         }
     }
 

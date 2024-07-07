@@ -32,7 +32,27 @@ public class MouseLook : MonoBehaviour
         // the minus 1 because the look direction is inverted
         _mouseY = -1 * _mouseY;
         _mouseY = Mathf.Clamp(_mouseY, MIN_LOOK_ANGLE, MAX_LOOK_ANGLE);
+        // _playerView.transform.Rotate(Vector3.right, _mouseY);
         
-        _playerView.transform.localEulerAngles += new Vector3(_mouseY, 0, 0);
+        // Clampan
+
+        if (_playerView.transform.localEulerAngles.x <= MIN_LOOK_ANGLE)
+        {
+            _playerView.transform.localEulerAngles = new Vector3(360 - MIN_LOOK_ANGLE, 0, 0);
+        }
+        // else if (_playerView.transform.localEulerAngles.x <= MAX_LOOK_ANGLE && _playerView.transform.localEulerAngles.x > 0)
+        // {
+        //     _playerView.transform.localEulerAngles = new Vector3(MAX_LOOK_ANGLE, 0, 0);
+        // }
+        else
+        {
+            // _playerView.transform.localEulerAngles += new Vector3(_mouseY, 0, 0);
+            _playerView.transform.Rotate(Vector3.right, _mouseY);
+        }
+
+        Debug.Log(_playerView.transform.localEulerAngles.x);
+        
+        // _playerView.transform.localEulerAngles = new Vector3(MIN_LOOK_ANGLE, 0, 0);
+        // _playerView.transform.localEulerAngles += new Vector3(MAX_LOOK_ANGLE, 0, 0);
     }
 }
