@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
         if (!IsGrounded)
         {
             _verticalVelocity.y += GRAVITY * Time.deltaTime; 
+            // _moveDirection.y += GRAVITY * Time.deltaTime; 
         }
         else
         {
@@ -58,7 +59,8 @@ public class PlayerController : MonoBehaviour
 
         // Debug.Log(_moveDirection);
 
-        _characterController.Move(_moveDirection * _speed * Time.deltaTime + _verticalVelocity);
+        _characterController.Move(_moveDirection * _speed * Time.deltaTime);
+        _characterController.Move(_verticalVelocity * Time.deltaTime);
         // Debug.Log(_verticalVelocity.y);
         Debug.Log(_isGrounded);
     }
@@ -67,13 +69,14 @@ public class PlayerController : MonoBehaviour
 
     private void InputManager_OnJumpPressed()
     {
-        _isJumping = true;
-        Debug.Log(_isGrounded);
+        // Debug.Log(_isGrounded);
 
         if (IsGrounded)
         {
+            _isJumping = true;
             _verticalVelocity.y = _jumpForce;
-            _isJumping = false;
+            Debug.Log("JUUMMMMMMMMMMMP" + _verticalVelocity.y);
+               // _isJumping = false;
         }
     }
 
@@ -87,6 +90,11 @@ public class PlayerController : MonoBehaviour
             if (value == true && !_isJumping)
             {
                 _verticalVelocity.y = 0;
+                _isJumping = false;
+                _isGrounded = value;
+            }
+            else
+            {
                 _isGrounded = value;
             }
         }
